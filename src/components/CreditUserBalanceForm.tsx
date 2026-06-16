@@ -44,7 +44,12 @@ export default function CreditUserBalanceForm({ prefilledUserId, onCreditSuccess
     try {
       const data = await runGraphQL<{ users: CustomerShort[] }>(USERS_QUERY, {}, bypassCache);
       if (data && data.users) {
-        setUsers(data.users);
+        // Exclude any name like "super admin", "superadmin" or containing "super" and "admin" (case-insensitive)
+        const cleanUsers = data.users.filter(user => {
+          const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
+          return !(fullName.includes('super admin') || fullName.includes('superadmin') || (fullName.includes('super') && fullName.includes('admin')));
+        });
+        setUsers(cleanUsers);
       }
     } catch (err: any) {
       console.error('Failed to load users list:', err);
@@ -157,12 +162,16 @@ export default function CreditUserBalanceForm({ prefilledUserId, onCreditSuccess
   const selectedUserInfo = users.find(u => u.id === userId);
 
   const filteredUsers = users.filter(user => {
+    const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
+    if (fullName.includes('super admin') || fullName.includes('superadmin') || (fullName.includes('super') && fullName.includes('admin'))) {
+      return false;
+    }
     const term = searchQuery.toLowerCase();
     return (
       user.id.toLowerCase().includes(term) ||
       user.firstName.toLowerCase().includes(term) ||
       user.lastName.toLowerCase().includes(term) ||
-      `${user.firstName} ${user.lastName}`.toLowerCase().includes(term)
+      fullName.includes(term)
     );
   });
 

@@ -82,6 +82,15 @@ export default function App() {
     setRefreshTrigger(prev => prev + 1);
   };
 
+  React.useEffect(() => {
+    if (activeTab === 'register' && adminUser) {
+      const isSuper = adminUser.role?.toUpperCase() === 'SUPER_ADMIN' || adminUser.role?.toUpperCase().includes('SUPER');
+      if (!isSuper) {
+        setActiveTab('loans');
+      }
+    }
+  }, [activeTab, adminUser]);
+
   // If unauthorized, show security gateway login or creation switch
   if (!token || !adminUser) {
     if (showRegisterView) {
@@ -102,6 +111,8 @@ export default function App() {
       />
     );
   }
+
+  const isSuperAdmin = adminUser.role?.toUpperCase() === 'SUPER_ADMIN' || adminUser.role?.toUpperCase().includes('SUPER');
 
   return (
     <div className="min-h-screen bg-black text-slate-100 font-sans flex flex-col md:flex-row selection:bg-brand-500/20 selection:text-brand-500">
@@ -236,21 +247,25 @@ export default function App() {
           </button>
 
 
-          <span className="px-3 pt-4 text-[9px] uppercase font-extrabold tracking-wider text-zinc-500 block mb-2">
-            Administration
-          </span>
+          {isSuperAdmin && (
+            <>
+              <span className="px-3 pt-4 text-[9px] uppercase font-extrabold tracking-wider text-zinc-500 block mb-2">
+                Administration
+              </span>
 
-          <button
-            onClick={() => { setActiveTab('register'); setIsMobileMenuOpen(false); }}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-              activeTab === 'register'
-                ? "bg-gradient-to-r from-[#d4af37]/20 to-[#d4af37]/5 border-l-4 border-[#d4af37] text-[#d4af37] pl-3"
-                : "text-zinc-400 hover:bg-zinc-900 hover:text-white"
-            }`}
-          >
-            <UserPlus className="h-4 w-4 text-[#d4af37]" />
-            <span>Add New Admin</span>
-          </button>
+              <button
+                onClick={() => { setActiveTab('register'); setIsMobileMenuOpen(false); }}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                  activeTab === 'register'
+                    ? "bg-gradient-to-r from-[#d4af37]/20 to-[#d4af37]/5 border-l-4 border-[#d4af37] text-[#d4af37] pl-3"
+                    : "text-zinc-400 hover:bg-zinc-900 hover:text-white"
+                }`}
+              >
+                <UserPlus className="h-4 w-4 text-[#d4af37]" />
+                <span>Add New Admin</span>
+              </button>
+            </>
+          )}
 
           <button
             onClick={() => { setActiveTab('profile'); setIsMobileMenuOpen(false); }}
@@ -465,7 +480,7 @@ export default function App() {
                 </div>
               )}
 
-              {activeTab === 'register' && (
+              {activeTab === 'register' && isSuperAdmin && (
                 <div className="max-w-2xl mx-auto">
                   <CreateAdminForm isInDashboard={true} />
                 </div>
