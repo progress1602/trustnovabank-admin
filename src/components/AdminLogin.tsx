@@ -11,10 +11,9 @@ import { User, LoginResult } from '../types';
 
 interface AdminLoginProps {
   onLoginSuccess: (user: User, token: string) => void;
-  onSwitchToCreate: () => void;
 }
 
-export default function AdminLogin({ onLoginSuccess, onSwitchToCreate }: AdminLoginProps) {
+export default function AdminLogin({ onLoginSuccess }: AdminLoginProps) {
   const [emailOrUsername, setEmailOrUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -184,15 +183,7 @@ export default function AdminLogin({ onLoginSuccess, onSwitchToCreate }: AdminLo
           </button>
         </form>
 
-        <div className="mt-6 text-center border-t border-zinc-900 pt-5">
-          <p className="text-zinc-500 text-[11px] mb-2">Need a new administrator account?</p>
-          <button
-            onClick={onSwitchToCreate}
-            className="text-[#d4af37] hover:text-gold-400 font-bold text-xs transition-colors cursor-pointer"
-          >
-            Create Admin Account &rarr;
-          </button>
-        </div>
+
       </motion.div>
     </div>
   );

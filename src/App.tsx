@@ -55,6 +55,9 @@ export default function App() {
   // Auto-refresh mechanism for Loans collection
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
+  const [activeTab, setActiveTab] = useState<'loans' | 'credit' | 'transactions' | 'deposits' | 'wireTransfers' | 'charities' | 'register' | 'profile'>('loans');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const handleLoginSuccess = (user: User, storedToken: string) => {
     setToken(storedToken);
     setAdminUser(user);
@@ -96,13 +99,9 @@ export default function App() {
     return (
       <AdminLogin 
         onLoginSuccess={handleLoginSuccess} 
-        onSwitchToCreate={() => setShowRegisterView(true)}
       />
     );
   }
-
-  const [activeTab, setActiveTab] = useState<'loans' | 'credit' | 'transactions' | 'deposits' | 'wireTransfers' | 'charities' | 'register' | 'profile'>('loans');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-black text-slate-100 font-sans flex flex-col md:flex-row selection:bg-brand-500/20 selection:text-brand-500">
