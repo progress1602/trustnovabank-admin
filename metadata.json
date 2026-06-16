@@ -1,0 +1,6 @@
+{
+  "name": "Trustnova Admin Dashboard",
+  "description": "An administrative dashboard for Trustnova Bank to manage administrative roles, query and approve loans, and manage user account credit balances.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
