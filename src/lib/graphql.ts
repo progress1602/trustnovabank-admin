@@ -533,3 +533,74 @@ mutation RejectCharity($charityId: ID!, $remarks: String) {
 }
 `;
 
+
+export const GRANTS_QUERY = `
+query Grants {
+  grants {
+    id
+    grantId
+    userId
+    grantType
+    grantTitle
+    businessName
+    federalTaxId
+    industrySector
+    amount
+    purpose
+    status
+    remarks
+    processedBy
+    processedAt
+    createdAt
+    updatedAt
+  }
+}
+`;
+
+export const APPROVE_GRANT_MUTATION = `
+mutation ApproveGrant($grantId: ID!) {
+  approveGrant(grantId: $grantId) {
+    id
+    grantId
+    userId
+    grantType
+    grantTitle
+    businessName
+    federalTaxId
+    industrySector
+    amount
+    purpose
+    status
+    remarks
+    processedBy
+    processedAt
+    createdAt
+    updatedAt
+  }
+}
+`;
+
+export const REJECT_GRANT_MUTATION = `
+mutation RejectGrant($grantId: ID!, $remarks: String) {
+  rejectGrant(grantId: $grantId, remarks: $remarks) {
+    id
+    grantId
+    userId
+    grantType
+    grantTitle
+    businessName
+    federalTaxId
+    industrySector
+    amount
+    purpose
+    status
+    remarks
+    processedBy
+    processedAt
+    createdAt
+    updatedAt
+  }
+}
+`;
+
+

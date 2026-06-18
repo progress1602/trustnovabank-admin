@@ -113,6 +113,25 @@ export interface Charity {
   updatedAt: string;
 }
 
+export interface Grant {
+  id: string;
+  grantId?: string;
+  userId: string;
+  grantType: string;
+  grantTitle: string;
+  businessName?: string;
+  federalTaxId?: string;
+  industrySector?: string;
+  amount: number;
+  purpose?: string;
+  status: string;
+  remarks?: string;
+  processedBy?: string;
+  processedAt?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 
 export interface LoginResult {
   success: boolean;
