@@ -24,6 +24,7 @@ export interface User {
   primaryBalance?: number;
   secondaryBalance?: number;
   tertiaryBalance?: number;
+  totalBalance?: number;
   totalDeposits?: number;
   totalWithdrawals?: number;
   totalTransfers?: number;

@@ -603,4 +603,44 @@ mutation RejectGrant($grantId: ID!, $remarks: String) {
 }
 `;
 
+export const ALL_USERS_DETAILS_QUERY = `
+query Users {
+  users {
+    id
+    firstName
+    lastName
+    email
+    username
+    phoneNumber
+    occupation
+    address
+    country
+    stateProvince
+    city
+    isVerified
+    zipPostalCode
+    profileImage
+    currencyProtocol
+    accountTier
+    accountNumber
+    primaryBalance
+    secondaryBalance
+    tertiaryBalance
+    totalBalance
+    totalDeposits
+    totalWithdrawals
+    totalTransfers
+    accountStatus
+    emailNotifications
+    smsNotifications
+    pushNotifications
+    role
+    kycStatus
+    createdAt
+    updatedAt
+  }
+}
+`;
+
+
 

@@ -23,7 +23,8 @@ import {
   TrendingUp,
   Send,
   Heart,
-  FileCheck2
+  FileCheck2,
+  Users
 } from 'lucide-react';
 
 import { User, Loan } from './types';
@@ -44,6 +45,7 @@ import DepositsManager from './components/DepositsManager';
 import WireTransfersManager from './components/WireTransfersManager';
 import CharitiesManager from './components/CharitiesManager';
 import GrantsManager from './components/GrantsManager';
+import UsersManager from './components/UsersManager';
 
 export default function App() {
   const [token, setToken] = useState<string | null>(getStoredToken());
@@ -57,7 +59,7 @@ export default function App() {
   // Auto-refresh mechanism for Loans collection
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
-  const [activeTab, setActiveTab] = useState<'loans' | 'credit' | 'transactions' | 'deposits' | 'wireTransfers' | 'charities' | 'grants' | 'register' | 'profile'>('loans');
+  const [activeTab, setActiveTab] = useState<'users' | 'loans' | 'credit' | 'transactions' | 'deposits' | 'wireTransfers' | 'charities' | 'grants' | 'register' | 'profile'>('loans');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLoginSuccess = (user: User, storedToken: string) => {
@@ -249,6 +251,18 @@ export default function App() {
           </button>
 
           <button
+            onClick={() => { setActiveTab('users'); setIsMobileMenuOpen(false); }}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+              activeTab === 'users'
+                ? "bg-gradient-to-r from-[#d4af37]/20 to-[#d4af37]/5 border-l-4 border-[#d4af37] text-[#d4af37] pl-3"
+                : "text-zinc-400 hover:bg-zinc-900 hover:text-white"
+            }`}
+          >
+            <Users className="h-4 w-4 text-[#d4af37]" />
+            <span>Customer Accounts</span>
+          </button>
+
+          <button
             onClick={() => { setActiveTab('transactions'); setIsMobileMenuOpen(false); }}
             className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
               activeTab === 'transactions'
@@ -373,6 +387,7 @@ export default function App() {
               {activeTab === 'wireTransfers' && "Wire Transfer Clearing"}
               {activeTab === 'charities' && "Charity Disbursement Board"}
               {activeTab === 'grants' && "Corporate Grants Allocation"}
+              {activeTab === 'users' && "Customer Accounts Registry"}
               {activeTab === 'register' && "Add New Administrator"}
               {activeTab === 'profile' && "Your Profile Settings"}
             </h2>
@@ -384,6 +399,7 @@ export default function App() {
               {activeTab === 'wireTransfers' && "Verify interbank SWIFT parameters and IBAN details to release or decline wire cashflows"}
               {activeTab === 'charities' && "Review, authorize, or decline philanthropic NGO donation outlays"}
               {activeTab === 'grants' && "Audit, release, or decline business or technical grant funding applications"}
+              {activeTab === 'users' && "Query detailed portfolio statistics, balances, and security compliance metrics"}
               {activeTab === 'register' && "Create secondary authorization credentials for manual database control"}
               {activeTab === 'profile' && "Verify current admin identity settings and record logs"}
             </p>
@@ -499,6 +515,12 @@ export default function App() {
               {activeTab === 'grants' && (
                 <div className="space-y-6">
                   <GrantsManager onMutationSuccess={handleMutationSuccess} refreshTrigger={refreshTrigger} />
+                </div>
+              )}
+
+              {activeTab === 'users' && (
+                <div className="space-y-6">
+                  <UsersManager refreshTrigger={refreshTrigger} />
                 </div>
               )}
 
